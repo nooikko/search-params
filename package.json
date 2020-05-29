@@ -1,0 +1,26 @@
+{
+  "name": "search-params",
+  "version": "1.0.0",
+  "description": "A template for creating typescript libraries",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": ".\\node_modules\\.bin\\tsc",
+    "lint:fix": "eslint --fix \"./src/**/*\" --ext .js --ext .jsx --ext .ts --ext .tsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayql/search-params.git"
+  },
+  "author": "Elijah C. Penney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dayql/search-params/issues"
+  },
+  "homepage": "https://github.com/dayql/search-params#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.1.0",
+    "typescript": "^3.9.3"
+  }
+}
