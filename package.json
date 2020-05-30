@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A template for creating typescript libraries",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": ".\\node_modules\\.bin\\tsc",
