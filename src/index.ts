@@ -54,6 +54,7 @@ class SearchParams {
 
   /**
    * Iterates over the entries in the URLSearchParams and builds an array of objects based on their key value pairs.
+   * @namespace dayql/search-params
    * TODO: This should return a single object and handle multiples of keys.
    * TODO: We also need some kind of data parser to handle array types and booleans.
    */
