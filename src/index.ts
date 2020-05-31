@@ -2,8 +2,18 @@ interface UnknownObject {
   [key: string]: any
 }
 
-export class SearchParams {
+interface SearchParamsType {
   URLSearchParams: URLSearchParams;
+  _pushHistory: (search: UnknownObject, title?: string) => void;
+  _buildURL: () => string;
+  _createNewInstance: (search: UnknownObject) => void;
+  setAll: (search: UnknownObject, title?: string) => void;
+}
+
+class SearchParams {
+
+  URLSearchParams: URLSearchParams;
+
   constructor() {
     this.URLSearchParams = new URLSearchParams();
   }
@@ -16,7 +26,8 @@ export class SearchParams {
    * @private
    * @namespace dayql/search-params
    */
-  _pushHistory(search: UnknownObject, url: string, title: string = document.title) {
+  _pushHistory(search: UnknownObject, title: string = document.title): void {
+    const url = this._buildURL();
     window.history.pushState(search, title, url);
   }
 
@@ -24,7 +35,7 @@ export class SearchParams {
    * Returns a string to append to the end of the URL
    * @namespace dayql/search-params
    */
-  _buildURL() {
+  _buildURL(): string {
     const query = this.URLSearchParams.toString();
 
     if (!query) return '';
@@ -37,8 +48,32 @@ export class SearchParams {
    * @param search All the key values pair used to create a new URLSearchParams instance
    * @namespace dayql/search-params
    */
-  _createNewInstance(search: UnknownObject) {
+  _createNewInstance(search: UnknownObject): void {
     this.URLSearchParams = new URLSearchParams(search);
+  }
+
+  /**
+   * Iterates over the entries in the URLSearchParams and builds an array of objects based on their key value pairs.
+   * TODO: This should return a single object and handle multiples of keys.
+   * TODO: We also need some kind of data parser to handle array types and booleans.
+   */
+  _getCurrentEntries() {
+    //@ts-ignore
+    const entries = this.URLSearchParams.entries();
+    const entryObjects = [];
+    let finished = false;
+
+    while (!finished) {
+      const { done, value } = entries.next();
+      finished = done;
+      if (value && value.length) {
+        entryObjects.push({
+          [value[0]]: value[1],
+        });
+      }
+    }
+
+    return entryObjects;
   }
 
   /**
@@ -47,9 +82,51 @@ export class SearchParams {
    * @param title `optional` The title of the history object being created
    * @namespace dayql/search-params
    */
-  set(search: UnknownObject, title: string = document.title) {
+  setAll(search: UnknownObject, title: string = document.title): void {
     this._createNewInstance(search);
-
-
+    this._pushHistory(search, title);
+    console.log(this._getCurrentEntries());
   }
+
+  /**
+   * Sets or replaces values in the URL params. If there were several matching values, this method deletes the others.
+   * @param search The key value pairs to update the URL params with
+   * @param title `optional` The title of the history object being created
+   * @namespace dayql/search-params
+   */
+  set(search: UnknownObject, title: string = document.title) {
+    const keys = Object.keys(search);
+
+    if (keys.length) {
+      keys.forEach(key => {
+        this.URLSearchParams.set(key, search[key]);
+      });
+    }
+
+    this._pushHistory(search, title);
+  }
+
+  /**
+   * Attaches a new instances of a key value pair to the URL.
+   * If a key already exists with a different value,
+   * this will create a new instance of that key with the new value.
+   * @param search The key value pairs to update the URL params with
+   * @param title `optional` The title of the history object being created
+   * @namespace dayql/search-params
+   */
+  append(search: UnknownObject, title: string = document.title): void {
+    const keys = Object.keys(search);
+
+    if (keys.length) {
+      keys.forEach(key => {
+        this.URLSearchParams.append(key, search[key]);
+      });
+    }
+
+    this._pushHistory(search, title);
+  }
+}
+
+export function createSearchParams(): SearchParamsType {
+  return new SearchParams();
 }
