@@ -8,6 +8,7 @@ export interface SearchParamsType {
   append: (search: UnknownObject, title?: string) => void;
   sync: () => void;
   delete: (keys: Array<string> | string, title?: string) => void;
+  getValues: () => void;
 }
 
 export interface SearchParamsArgs {

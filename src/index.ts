@@ -166,6 +166,10 @@ class SearchParams {
       this.URLSearchParams.delete(keys);
     }
   }
+
+  getValues() {
+    return this._getCurrentEntries();
+  }
 }
 
 export function createSearchParams(
