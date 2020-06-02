@@ -9,9 +9,19 @@ export interface SearchParamsType {
   sync: () => void;
   delete: (keys: Array<string> | string, title?: string) => void;
   getValues: () => void;
+  clear: (title?: string) => void;
 }
 
 export interface SearchParamsArgs {
   useHashRouter?: boolean;
   useDuplicatesAsArrays?: boolean;
+}
+
+export interface EntryIteratorType {
+  done: boolean;
+  value: Array<string>;
+}
+
+export interface EntryOutputType {
+  [key: string]: any;
 }
