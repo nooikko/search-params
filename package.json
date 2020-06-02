@@ -1,7 +1,7 @@
 {
-  "name": "search-params",
+  "name": "@dayql/search-params",
   "version": "1.0.0",
-  "description": "A template for creating typescript libraries",
+  "description": "Easily Set and Get URL search parameters.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
