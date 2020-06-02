@@ -10,8 +10,6 @@ npm install @dayql/search-params
 
 ## Documentation
 
----
-
 ### Getting Started
 
 The first thing we need to do is create a new instance. We can do that by:
