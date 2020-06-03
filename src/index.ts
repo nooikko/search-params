@@ -1,5 +1,15 @@
-import { SearchParamsType, SearchParamsArgs } from './types';
-import { SearchParams } from './SearchParams';
+import { SearchParams, SearchParamsArgs, UnknownObject } from './SearchParams';
+
+interface SearchParamsType {
+  setAll: (search: UnknownObject, title?: string) => void;
+  set: (search: UnknownObject, title?: string) => void;
+  append: (search: UnknownObject, title?: string) => void;
+  sync: () => void;
+  delete: (keys: Array<string> | string, title?: string) => void;
+  getValues: () => void;
+  clear: (title?: string) => void;
+  buildLink: (path: string) => string;
+}
 
 /**
  * Creates a new instance of SearchParams

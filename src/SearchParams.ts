@@ -1,9 +1,20 @@
-import {
-  UnknownObject,
-  SearchParamsArgs,
-  EntryIteratorType,
-  EntryOutputType,
-} from './types';
+export interface UnknownObject {
+  [key: string]: any;
+}
+
+export interface SearchParamsArgs {
+  useHashRouter?: boolean;
+  useDuplicatesAsArrays?: boolean;
+}
+
+interface EntryIteratorType {
+  done: boolean;
+  value: Array<string>;
+}
+
+interface EntryOutputType {
+  [key: string]: any;
+}
 
 export class SearchParams {
   URLSearchParams: URLSearchParams;
@@ -153,11 +164,16 @@ export class SearchParams {
 
   /**
    * Destroys the old instance of keys and recreates the URL params based on the new object.
+   * Clears the params if you provide an empty search object.
    * @param search All the key values pair used to create a new URLSearchParams instance.
    * @param title `optional` The title of the history object being created.
    * @namespace dayql/search-params
    */
   setAll(search: UnknownObject, title: string = document.title): void {
+    if (!Object.keys(search).length) {
+      this.clear();
+      return;
+    }
     const urlFriendlySearch = this._getURLKeyObject(search);
     this._createNewInstance(urlFriendlySearch);
     this._pushHistory(search, title);
@@ -254,5 +270,15 @@ export class SearchParams {
     const baseURL = this._getBaseURL();
     window.history.pushState({}, title, baseURL);
     this._createNewInstance({});
+  }
+
+  buildLink(path: string): string {
+    const { origin, hash } = window.location;
+    const truePath = path[0] === '/' ? path : `/${path}`;
+    if (this.useHashRouter) {
+      return `${origin}${truePath}${hash}${this._buildURL()}`;
+    }
+
+    return `${origin}${truePath}${this._buildURL()}`;
   }
 }

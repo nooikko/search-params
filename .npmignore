@@ -1,2 +1,9 @@
 tsconfig.json
 src
+docs
+.eslintignore
+.editorconfig
+.eslint.js
+.gitignore
+.prettier.config.json
+tsconfig.json
