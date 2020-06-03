@@ -38,7 +38,6 @@ export class SearchParams {
    * @param title The title of the history object being created.
    * @param url The slug to append to the end of the URL.
    * @private
-   * @namespace dayql/search-params
    */
   _pushHistory(search: UnknownObject, title: string = document.title): void {
     const url = this._buildURL();
@@ -48,7 +47,6 @@ export class SearchParams {
   /**
    * Returns a string to append to the end of the URL.
    * @private
-   * @namespace dayql/search-params
    */
   _buildURL(): string {
     const query = this.URLSearchParams.toString();
@@ -62,7 +60,6 @@ export class SearchParams {
    * Reads the current URL search.
    * Will pull the search off the hash if this.useHashRouter is set.
    * @private
-   * @namespace dayql/search-params
    */
   _getCurrentURLSearch() {
     const baseURL = this.useHashRouter
@@ -82,7 +79,6 @@ export class SearchParams {
    * with a new one based on a new object.
    * @param search All the key values pair used to create a new URLSearchParams instance.
    * @private
-   * @namespace dayql/search-params
    */
   _createNewInstance(search: UnknownObject): void {
     this.URLSearchParams = new URLSearchParams(search);
@@ -91,7 +87,6 @@ export class SearchParams {
   /**
    * Iterates over the entries in the URLSearchParams and builds an array of objects based on their key value pairs.
    * @private
-   * @namespace dayql/search-params
    */
   _getCurrentEntries() {
     //@ts-ignore - This is ignored because typescript is angry about .entries
@@ -124,7 +119,6 @@ export class SearchParams {
    * @param search The object containg the data needing converting.
    * @returns An object with type specific names.
    * @private
-   * @namespace dayql/search-params
    */
   _getURLKeyObject(search: UnknownObject): UnknownObject {
     return Object.keys(search).reduce((acc: UnknownObject, cur: string) => {
@@ -139,7 +133,6 @@ export class SearchParams {
    * @param search The object containg the data needing converting.
    * @returns An object with values restored from type specific names.
    * @private
-   * @namespace dayql/search-params
    */
   _readURLKeyObject(search: UnknownObject): UnknownObject {
     return Object.keys(search).reduce((acc: UnknownObject, cur: string) => {
@@ -155,7 +148,6 @@ export class SearchParams {
    * Gets the current base URL
    * @returns The base URL
    * @private
-   * @namespace dayql/search-params
    */
   _getBaseURL() {
     const search = this._getCurrentURLSearch();
@@ -167,7 +159,6 @@ export class SearchParams {
    * Clears the params if you provide an empty search object.
    * @param search All the key values pair used to create a new URLSearchParams instance.
    * @param title `optional` The title of the history object being created.
-   * @namespace dayql/search-params
    */
   setAll(search: UnknownObject, title: string = document.title): void {
     if (!Object.keys(search).length) {
@@ -184,7 +175,6 @@ export class SearchParams {
    * If there were several matching values, this method deletes the others.
    * @param search The key value pairs to update the URL params with.
    * @param title `optional` The title of the history object being created.
-   * @namespace dayql/search-params
    */
   set(search: UnknownObject, title: string = document.title): void {
     const urlFriendlySearch = this._getURLKeyObject(search);
@@ -205,7 +195,6 @@ export class SearchParams {
    * this will create a new instance of that key with the new value.
    * @param search The key value pairs to update the URL params with.
    * @param title `optional` The title of the history object being created.
-   * @namespace dayql/search-params
    */
   append(search: UnknownObject, title: string = document.title): void {
     const urlFriendlySearch = this._getURLKeyObject(search);
@@ -223,7 +212,6 @@ export class SearchParams {
   /**
    * Destroys the old instance of keys and recreates
    * the URL params based on the current URL.
-   * @namespace dayql/search-params
    */
   sync(): void {
     const search = this._getCurrentURLSearch();
@@ -235,7 +223,6 @@ export class SearchParams {
    * all instances of the key will be removed.
    * @param keys The key or keys to be removed from the URL.
    * @param title `optional` The title of the history object being created.
-   * @namespace dayql/search-params
    */
   delete(keys: Array<string> | string, title: string = document.title): void {
     if (Array.isArray(keys)) {
@@ -254,7 +241,6 @@ export class SearchParams {
   /**
    * Gets all values from the current object.
    * @returns An object containing all values in the current state.
-   * @namespace dayql/search-params
    */
   getValues() {
     const urlValues = this._getCurrentEntries();
@@ -264,7 +250,6 @@ export class SearchParams {
   /**
    * Clears all params in the URL
    * @param title `optional` The title of the history object being created.
-   * @namespace dayql/search-params
    */
   clear(title: string = document.title) {
     const baseURL = this._getBaseURL();
@@ -272,6 +257,11 @@ export class SearchParams {
     this._createNewInstance({});
   }
 
+  /**
+   * Builds a link with the current URL Search Params
+   * @param path The path to use to build the link
+   * @returns The built link
+   */
   buildLink(path: string): string {
     const { origin, hash } = window.location;
     const truePath = path[0] === '/' ? path : `/${path}`;
