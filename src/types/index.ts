@@ -22,7 +22,7 @@ export interface SearchParamsType {
   append: (search: UnknownObject, title?: string) => void;
   sync: () => void;
   delete: (keys: Array<string> | string, title?: string) => void;
-  getValues: () => void;
+  getValues: () => UnknownObject;
   clear: (title?: string) => void;
   buildLink: (path: string) => string;
 }
