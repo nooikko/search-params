@@ -19,6 +19,8 @@ export class SearchParams {
     this.URLSearchParams = new URLSearchParams();
     this.useHashRouter = useHashRouter || false;
     this.useDuplicatesAsArrays = useDuplicatesAsArrays || false;
+
+    this.sync();
   }
 
   /**
