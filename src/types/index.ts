@@ -21,7 +21,7 @@ export interface SearchParamsType {
   set: (search: UnknownObject, title?: string) => void;
   append: (search: UnknownObject, title?: string) => void;
   sync: () => void;
-  delete: (keys: Array<string> | string, title?: string) => void;
+  remove: (keys: Array<string> | string, title?: string) => void;
   getValues: () => UnknownObject;
   clear: (title?: string) => void;
   buildLink: (path: string) => string;

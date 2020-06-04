@@ -225,7 +225,7 @@ export class SearchParams {
    * @param keys The key or keys to be removed from the URL.
    * @param title `optional` The title of the history object being created.
    */
-  delete(keys: Array<string> | string, title: string = document.title): void {
+  remove(keys: Array<string> | string, title: string = document.title): void {
     if (Array.isArray(keys)) {
       keys.forEach((key) => {
         this.URLSearchParams.delete(key);
