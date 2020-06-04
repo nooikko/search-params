@@ -88,19 +88,31 @@ export class SearchParams {
       finished = done;
       if (value && value.length) {
         const [key, val] = value;
+        const parsedVal = this._parseValues(val);
 
         if (this.useDuplicatesAsArrays && output[key]) {
-          output[key] = [output[key], val].reduce(
+          output[key] = [output[key], parsedVal].reduce(
             (acc, cur) => acc.concat(cur),
             [],
           );
         } else {
-          output[key] = val;
+          output[key] = parsedVal;
         }
       }
     }
 
     return output;
+  }
+
+  /**
+   * Parses values into their proper data types
+   * @param value The value to parse
+   * @returns The parsed value
+   */
+  _parseValues(value: string) {
+    if (value === 'true' || value === 'false') {
+      return JSON.parse(value);
+    }
   }
 
   /**
