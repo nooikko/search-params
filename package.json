@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": ".\\node_modules\\.bin\\tsc",
+    "build": "rimraf dist && .\\node_modules\\.bin\\tsc",
+    "docs:build": "rimraf docs && .\\node_modules\\.bin\\typedoc",
     "lint:fix": "eslint --fix \"./src/**/*\" --ext .js --ext .jsx --ext .ts --ext .tsx"
   },
   "repository": {
@@ -22,6 +23,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.1.0",
+    "rimraf": "^3.0.2",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3"
   }
