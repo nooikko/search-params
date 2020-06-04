@@ -1,6 +1,6 @@
 {
   "name": "@dayql/search-params",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Easily Set and Get URL search parameters.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
