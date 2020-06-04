@@ -1,20 +1,9 @@
-export interface UnknownObject {
-  [key: string]: any;
-}
-
-export interface SearchParamsArgs {
-  useHashRouter?: boolean;
-  useDuplicatesAsArrays?: boolean;
-}
-
-interface EntryIteratorType {
-  done: boolean;
-  value: Array<string>;
-}
-
-interface EntryOutputType {
-  [key: string]: any;
-}
+import {
+  SearchParamsArgs,
+  UnknownObject,
+  EntryOutputType,
+  EntryIteratorType,
+} from './types';
 
 export class SearchParams {
   URLSearchParams: URLSearchParams;
@@ -37,18 +26,17 @@ export class SearchParams {
    * @param search An object containing all the key value pairs that was used to create the new URL.
    * @param title The title of the history object being created.
    * @param url The slug to append to the end of the URL.
-   * @private
    */
   _pushHistory(search: UnknownObject, title: string = document.title): void {
-    const url = this._buildURL();
+    const url = this._buildQuery();
     window.history.pushState(search, title, url);
   }
 
   /**
    * Returns a string to append to the end of the URL.
-   * @private
+   * @returns The constructed query from the current URLSearchParam instance
    */
-  _buildURL(): string {
+  _buildQuery(): string {
     const query = this.URLSearchParams.toString();
 
     if (!query) return '';
@@ -59,7 +47,6 @@ export class SearchParams {
   /**
    * Reads the current URL search.
    * Will pull the search off the hash if this.useHashRouter is set.
-   * @private
    */
   _getCurrentURLSearch() {
     const baseURL = this.useHashRouter
@@ -266,9 +253,9 @@ export class SearchParams {
     const { origin, hash } = window.location;
     const truePath = path[0] === '/' ? path : `/${path}`;
     if (this.useHashRouter) {
-      return `${origin}${truePath}${hash}${this._buildURL()}`;
+      return `${origin}${truePath}${hash}${this._buildQuery()}`;
     }
 
-    return `${origin}${truePath}${this._buildURL()}`;
+    return `${origin}${truePath}${this._buildQuery()}`;
   }
 }
