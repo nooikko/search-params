@@ -6,8 +6,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf dist && .\\node_modules\\.bin\\tsc",
+    "tsc:build": "rimraf dist && .\\node_modules\\.bin\\tsc",
     "docs:build": "rimraf docs && .\\node_modules\\.bin\\typedoc",
+    "build": "npm run tsc:build && npm run docs:build",
     "lint:fix": "eslint --fix \"./src/**/*\" --ext .js --ext .jsx --ext .ts --ext .tsx"
   },
   "repository": {
