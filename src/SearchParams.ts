@@ -27,11 +27,20 @@ export class SearchParams {
    * Pushes a new history state into the history stack.
    * @param search An object containing all the key value pairs that was used to create the new URL.
    * @param title The title of the history object being created.
-   * @param url The slug to append to the end of the URL.
    */
   _pushHistory(search: UnknownObject, title: string = document.title): void {
     const url = this._buildQuery();
     window.history.pushState(search, title, url);
+  }
+
+  /**
+   * Replaces the current history with a new one
+   * @param search An object containing all the key value pairs that was used to create the new URL.
+   * @param title The title of the history object being created.
+   */
+  _replaceHistory(search: UnknownObject, title: string = document.title): void {
+    const url = this._buildQuery();
+    window.history.replaceState(search, title, url);
   }
 
   /**
@@ -249,7 +258,7 @@ export class SearchParams {
   restore(title: string = document.title): void {
     const urlValues = this._getCurrentEntries();
     const search = this._readURLKeyObject(urlValues);
-    this._pushHistory(search, title);
+    this._replaceHistory(search, title);
   }
 
   /**
