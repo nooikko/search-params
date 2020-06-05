@@ -49,6 +49,7 @@ export class SearchParams {
   /**
    * Reads the current URL search.
    * Will pull the search off the hash if this.useHashRouter is set.
+   * @returns The current URL search
    */
   _getCurrentURLSearch() {
     const baseURL = this.useHashRouter
@@ -75,9 +76,10 @@ export class SearchParams {
 
   /**
    * Iterates over the entries in the URLSearchParams and builds an array of objects based on their key value pairs.
+   * @returns The current entries with corrected value types
    * @private
    */
-  _getCurrentEntries() {
+  _getCurrentEntries(): UnknownObject {
     //@ts-ignore - This is ignored because typescript is angry about .entries
     const entries = this.URLSearchParams.entries();
     const output: EntryOutputType = {};
@@ -109,7 +111,7 @@ export class SearchParams {
    * @param value The value to parse
    * @returns The parsed value
    */
-  _parseValues(value: string) {
+  _parseValues(value: string): any {
     if (value === 'true' || value === 'false') {
       return JSON.parse(value);
     }
@@ -150,7 +152,7 @@ export class SearchParams {
    * @returns The base URL
    * @private
    */
-  _getBaseURL() {
+  _getBaseURL(): string {
     const search = this._getCurrentURLSearch();
     return window.location.href.replace(search, '');
   }
@@ -240,10 +242,21 @@ export class SearchParams {
   }
 
   /**
+   * Updates the URL to match the current state. Useful if the URL gets
+   * wiped for some reason.
+   * @param title `optional` The title of the history object being created.
+   */
+  restore(title: string = document.title): void {
+    const urlValues = this._getCurrentEntries();
+    const search = this._readURLKeyObject(urlValues);
+    this._pushHistory(search, title);
+  }
+
+  /**
    * Gets all values from the current object.
    * @returns An object containing all values in the current state.
    */
-  getValues() {
+  getValues(): UnknownObject {
     const urlValues = this._getCurrentEntries();
     return this._readURLKeyObject(urlValues);
   }
@@ -252,7 +265,7 @@ export class SearchParams {
    * Clears all params in the URL
    * @param title `optional` The title of the history object being created.
    */
-  clear(title: string = document.title) {
+  clear(title: string = document.title): void {
     const baseURL = this._getBaseURL();
     window.history.pushState({}, title, baseURL);
     this._createNewInstance({});
